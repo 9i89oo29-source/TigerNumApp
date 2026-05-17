@@ -39,9 +39,6 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
-            firebaseCrashlytics {
-                mappingFileUploadEnabled = true
-            }
         }
         debug {
             isMinifyEnabled = false
