@@ -10,9 +10,9 @@ import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
-class SmsPollingWorker @AssistedInject constructor(
-    @Assisted context: Context,
-    @Assisted params: WorkerParameters,
+class SmsPollingWorker // // @AssistedInject constructor(
+    // @Assisted context: Context,
+    // @Assisted params: WorkerParameters,
     private val repository: TigerRepository
 ) : CoroutineWorker(context, params) {
 
