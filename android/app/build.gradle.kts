@@ -7,6 +7,10 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+ksp {
+    arg("correctErrorTypes", "true")
+}
+
 android {
     namespace = "com.tigernum.app"
     compileSdk = 35
