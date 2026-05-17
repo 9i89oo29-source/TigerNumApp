@@ -16,9 +16,9 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '17'
-        cache: 'gradle'
 
-    - name: Build Debug APK with Gradle Daemon
+    - name: Clean and Build Debug APK
       run: |
         cd android
-        gradle assembleDebug
+        # أمر هندسي لتنظيف بيئة العمل ومسح أدوات التقارير المتعارضة تلقائياً
+        ./gradlew clean assembleDebug --no-build-cache -Dorg.gradle.project.kotlin.build.report.output=none
