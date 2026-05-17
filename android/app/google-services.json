@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "168106309385",
+    "project_id": "tigernum-7e4fd",
+    "storage_bucket": "tigernum-7e4fd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168106309385:android:caa128cb368ea5328785d8",
+        "android_client_info": {
+          "package_name": "com.tigernum.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxMxUPjd20wlGSVB1CR11GFAywCjqS25E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
