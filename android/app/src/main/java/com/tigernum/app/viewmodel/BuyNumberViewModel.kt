@@ -3,6 +3,7 @@ package com.tigernum.app.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tigernum.app.data.repository.TigerRepository
+import com.tigernum.app.data.remote.dto.SmsCodeResponseDto   // 👈 إضافة الاستيراد
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -42,12 +43,12 @@ class BuyNumberViewModel @Inject constructor(
             while (isActive) {
                 delay(5000)
                 val result = repository.getSmsCode(orderId)
-                result.onSuccess { response ->
+                result.onSuccess { response: SmsCodeResponseDto ->   // 👈 تحديد النوع صراحة
                     if (response.status == "ok" && response.code != null) {
                         _uiState.update { it.copy(smsCode = response.code, isWaiting = false) }
                         cancelPolling()
                     }
-                }.onFailure {
+                }.onFailure { error: Throwable ->   // 👈 أيضاً تحديد نوع الخطأ (اختياري ولكن مفيد)
                     _uiState.update { it.copy(errorMessage = "فشل في جلب الكود", isWaiting = false) }
                     cancelPolling()
                 }
