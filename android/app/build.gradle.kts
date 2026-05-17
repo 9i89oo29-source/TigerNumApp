@@ -7,6 +7,12 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+ksp {
+    arg("correctErrorTypes", "true")
+    arg("dagger.fastInit", "enabled")
+    arg("hilt.disableModulesHaveInstallInCheck", "true")
+}
+
 android {
     namespace = "com.tigernum.app"
     compileSdk = 35
@@ -94,6 +100,7 @@ dependencies {
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.51")
