@@ -11,6 +11,7 @@ ksp {
     arg("correctErrorTypes", "true")
     arg("dagger.fastInit", "enabled")
     arg("hilt.disableModulesHaveInstallInCheck", "true")
+    arg("hilt.enableTransformForLocalTests", "true")
 }
 
 android {
@@ -66,6 +67,10 @@ android {
         compose = true
         buildConfig = true
     }
+    androidFeatures {
+        buildConfig = true
+    }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.8"
     }
