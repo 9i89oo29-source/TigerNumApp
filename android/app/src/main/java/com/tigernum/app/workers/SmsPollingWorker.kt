@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.tigernum.app.data.repository.TigerRepository
+import com.tigernum.app.data.remote.dto.SmsCodeResponseDto   // 👈 إضافة الاستيراد
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
@@ -20,7 +21,6 @@ class SmsPollingWorker @AssistedInject constructor(
         const val KEY_ORDER_ID = "order_id"
         const val WORK_NAME_PREFIX = "sms_poll_"
 
-        // نقل الدالة إلى هنا هو الحل الهندسي الصحيح برمجياً لتخطي خطأ الـ KSP
         fun enqueue(context: Context, orderId: String) {
             val data = workDataOf(KEY_ORDER_ID to orderId)
             val request = OneTimeWorkRequestBuilder<SmsPollingWorker>()
@@ -39,7 +39,7 @@ class SmsPollingWorker @AssistedInject constructor(
             if (isStopped) return Result.failure()
             delay(5000)
             val result = repository.getSmsCode(orderId)
-            result.onSuccess { response ->
+            result.onSuccess { response: SmsCodeResponseDto ->   // 👈 تحديد النوع صراحة
                 if (response.status == "ok" && response.code != null) {
                     return Result.success()
                 }
