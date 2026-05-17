@@ -10,15 +10,26 @@ import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
-class SmsPollingWorker // // @AssistedInject constructor(
-    // @Assisted context: Context,
-    // @Assisted params: WorkerParameters,
+class SmsPollingWorker @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted params: WorkerParameters,
     private val repository: TigerRepository
 ) : CoroutineWorker(context, params) {
 
     companion object {
         const val KEY_ORDER_ID = "order_id"
         const val WORK_NAME_PREFIX = "sms_poll_"
+
+        // نقل الدالة إلى هنا هو الحل الهندسي الصحيح برمجياً لتخطي خطأ الـ KSP
+        fun enqueue(context: Context, orderId: String) {
+            val data = workDataOf(KEY_ORDER_ID to orderId)
+            val request = OneTimeWorkRequestBuilder<SmsPollingWorker>()
+                .setInputData(data)
+                .setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
+                .build()
+            WorkManager.getInstance(context)
+                .enqueueUniqueWork(WORK_NAME_PREFIX + orderId, ExistingWorkPolicy.REPLACE, request)
+        }
     }
 
     override suspend fun doWork(): Result {
@@ -30,22 +41,11 @@ class SmsPollingWorker // // @AssistedInject constructor(
             val result = repository.getSmsCode(orderId)
             result.onSuccess { response ->
                 if (response.status == "ok" && response.code != null) {
-                    // يمكن إرسال إشعار أو تحديث via LiveData
                     return Result.success()
                 }
             }
             attempts++
         }
         return Result.failure()
-    }
-
-    fun enqueue(orderId: String) {
-        val data = workDataOf(KEY_ORDER_ID to orderId)
-        val request = OneTimeWorkRequestBuilder<SmsPollingWorker>()
-            .setInputData(data)
-            .setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
-            .build()
-        WorkManager.getInstance(applicationContext)
-            .enqueueUniqueWork(WORK_NAME_PREFIX + orderId, ExistingWorkPolicy.REPLACE, request)
     }
 }
