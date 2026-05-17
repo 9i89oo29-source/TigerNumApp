@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.tigernum.app.data.local.entity.CountryEntity
 import com.tigernum.app.data.local.entity.ServiceEntity
 import com.tigernum.app.data.repository.TigerRepository
+import com.tigernum.app.data.remote.dto.BuyResponseDto   // 👈 إضافة الاستيراد
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -81,7 +82,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
             val result = repository.buyNumber(factoryCode, country.code, service)
-            result.onSuccess { response ->
+            result.onSuccess { response: BuyResponseDto ->   // 👈 تحديد النوع صراحة
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -89,7 +90,7 @@ class HomeViewModel @Inject constructor(
                         balance = repository.getBalance()
                     )
                 }
-            }.onFailure { e ->
+            }.onFailure { e: Throwable ->   // 👈 تحديد النوع صراحة
                 _uiState.update {
                     it.copy(isLoading = false, errorMessage = e.message ?: "حدث خطأ")
                 }
