@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.tigernum.app.R
+import com.tigernum.app.ui.navigation.Screen   // 👈 إضافة هذا الاستيراد
 import com.tigernum.app.viewmodel.SettingsViewModel
 
 @Composable
