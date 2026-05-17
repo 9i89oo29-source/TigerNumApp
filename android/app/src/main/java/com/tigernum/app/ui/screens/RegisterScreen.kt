@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController                     // 👈 إضافة
 import com.tigernum.app.R
+import com.tigernum.app.ui.navigation.Screen                  // 👈 إضافة
 import com.tigernum.app.viewmodel.RegisterViewModel
 import kotlinx.coroutines.launch
 
@@ -18,7 +20,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun RegisterScreen(navController: NavHostController, viewModel: RegisterViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
-    val scope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()   // هذا يعمل الآن بعد الاستيراد
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
