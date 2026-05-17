@@ -1,5 +1,6 @@
 package com.tigernum.app.data.remote
 
+import com.tigernum.app.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
