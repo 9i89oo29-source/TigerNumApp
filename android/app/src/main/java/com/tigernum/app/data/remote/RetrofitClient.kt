@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     // استبدل بعنوان خادمك الحقيقي
-    private const val BASE_URL = "https://your-production-server.com/"
+    private const val BASE_URL = "http://72.60.194.151:3000/"
 
     private val gson = GsonBuilder().setLenient().create()
 
